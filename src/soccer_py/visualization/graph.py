@@ -5,46 +5,19 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Ellipse
 from matplotlib.image import NonUniformImage
 
-################################################
-### Field variables 
-X_SIZE = 105.0
-Y_SIZE = 68.0
-
-BOX_HEIGHT = ((16.5*2 + 7.32)/Y_SIZE*100)/1.3
-BOX_WIDTH = 16.5/X_SIZE*100
-
-GOAL = 7.32/Y_SIZE*100
-
-GOAL_AREA_HEIGHT = 5.4864*2/Y_SIZE*100 + GOAL
-GOAL_AREA_WIDTH = 5.4864/X_SIZE*100
-################################################
-
 def save_png(plt):
 	name = 'heatmap'
 	plt.savefig(name + ".png")
 
-def draw_patches(axes):
+def draw_lines(axes):
 		plt.xlim([0,100])
 		plt.ylim([0,68])
-
-		#half-way line
-		axes.add_line(plt.Line2D([50, 50], [100, 0],
-										c='w'))
-		
-		#penalty areas
-		axes.add_patch(plt.Rectangle((100-BOX_WIDTH, (70-BOX_HEIGHT)/2),  BOX_WIDTH, BOX_HEIGHT,
-											 ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((0, (70-BOX_HEIGHT)/2),  BOX_WIDTH, BOX_HEIGHT,
-															 ec='w', fc='none'))                       
-		
-		#goal areas
-		axes.add_patch(plt.Rectangle((100-GOAL_AREA_WIDTH, (73-GOAL_AREA_HEIGHT)/2),  GOAL_AREA_WIDTH, GOAL_AREA_HEIGHT,
-											 ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((0, (73-GOAL_AREA_HEIGHT)/2),  GOAL_AREA_WIDTH, GOAL_AREA_HEIGHT,
-															 ec='w', fc='none'))                       
-		#halfway circle
-		axes.add_patch(Ellipse((50, 35), 2*9.15/X_SIZE*100, 2*9.15/Y_SIZE*100,
-																		ec='w', fc='none'))
+		axes.add_line(plt.Line2D([50, 50], [100, 0], c='w'))
+		axes.add_patch(plt.Rectangle((82.3, 20.24), 15.71, 29.5, ec='w', fc='none'))
+		axes.add_patch(plt.Rectangle((0, 20.24), 15.71, 29.53, ec='w', fc='none'))                       
+		axes.add_patch(plt.Rectangle((94.8, 23.05), 5.2, 26.9, ec='w', fc='none'))
+		axes.add_patch(plt.Rectangle((0, 23.05), 5.2, 26.9, ec='w', fc='none'))                       
+		axes.add_patch(Ellipse((50, 35), 17.43, 26.91, ec='w', fc='none'))
 
 		return axes
 
@@ -53,14 +26,14 @@ def _create_histogram(array):
 	x, y = array[:,1], array[:,2]
 	heatmap, xedges, yedges = np.histogram2d(x, y, bins=50, range=[[0, 105], [0, 68]])
 	heatmap = heatmap.T
-	fig = plt.figure(figsize=(X_SIZE/15, Y_SIZE/15))
+	fig = plt.figure(figsize=(105/15, 68/15))
 	axes = fig.add_subplot(1, 1, 1)
 	im = NonUniformImage(axes, interpolation='bilinear',cmap='gnuplot')
 	xcenters = (xedges[:-1] + xedges[1:]) / 2
 	ycenters = (yedges[:-1] + yedges[1:]) / 2
 	im.set_data(xcenters, ycenters,heatmap)
 	axes.images.append(im)
-	axes = draw_patches(axes)
+	axes = draw_lines(axes)
 	plt.axis('off')
 
 	return plt
@@ -88,8 +61,6 @@ def heatmap(array):
 	plot = _create_histogram(array)
 
 	return plot
-
-
 
 
 
