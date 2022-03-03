@@ -5,18 +5,16 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import Ellipse
 from matplotlib.image import NonUniformImage
 
-def save_png(plt):
-	name = 'heatmap'
-	plt.savefig(name + ".png")
+# ----- Heatmap (Start) -----
 
 def draw_lines(axes):
 		plt.xlim([0,100])
 		plt.ylim([0,68])
 		axes.add_line(plt.Line2D([50, 50], [100, 0], c='w'))
 		axes.add_patch(plt.Rectangle((82.3, 20.24), 15.71, 29.5, ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((0, 20.24), 15.71, 29.53, ec='w', fc='none'))                       
+		axes.add_patch(plt.Rectangle((0, 20.24), 15.71, 29.53, ec='w', fc='none'))
 		axes.add_patch(plt.Rectangle((94.8, 23.05), 5.2, 26.9, ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((0, 23.05), 5.2, 26.9, ec='w', fc='none'))                       
+		axes.add_patch(plt.Rectangle((0, 23.05), 5.2, 26.9, ec='w', fc='none'))
 		axes.add_patch(Ellipse((50, 35), 17.43, 26.91, ec='w', fc='none'))
 
 		return axes
@@ -62,6 +60,9 @@ def heatmap(array):
 
 	return plot
 
+# ----- Heatmap (Finish) -----
+
+# ----- Sprintmap (Start) -----
 
 
 
@@ -69,3 +70,6 @@ def heatmap(array):
 
 
 
+
+
+# ----- Sprintmap (Finish) -----
