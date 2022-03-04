@@ -9,7 +9,7 @@ from matplotlib import markers
 
 from math import hypot
 
-from multimethod import multimethod
+# from multimethod import multimethod
 
 from itertools import groupby
 from operator import itemgetter
@@ -178,7 +178,7 @@ def split_array(array):
 	spl_array = np.split(array, len(array)/20)
 	return spl_array
 
-@multimethod
+# @multimethod
 def sprintmap(array):
 	try:
 		ndarray = _is_ndarray(array)
