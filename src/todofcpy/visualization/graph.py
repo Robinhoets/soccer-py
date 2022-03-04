@@ -18,7 +18,10 @@ from operator import itemgetter
 
 def _is_ndarray(array):
 	if type(array) is np.ndarray:
-		return True
+		if len(array.shape) == 2 and len(array[0]) == 2:
+			return True
+		else:
+			return False
 	else:
 		return False
 
@@ -41,7 +44,7 @@ def draw_lines(axes):
 
 # helper definitions
 def _create_histogram(array):
-	x, y = array[:,1], array[:,2]
+	x, y = array[:,0], array[:,1]
 	heatmap, xedges, yedges = np.histogram2d(x, y, bins=50, range=[[0, 105], [0, 68]])
 	heatmap = heatmap.T
 	fig = plt.figure(figsize=(105/15, 68/15))
@@ -60,6 +63,12 @@ def _create_histogram(array):
 
 # takes a numpy.ndarray
 def heatmap(array):
+	"""
+	Parameters
+	----------
+	array: numpy array
+		A 2d numpy array.
+	"""
 	try:
 		ndarray = _is_ndarray(array)
 		if(ndarray):
@@ -118,11 +127,11 @@ def graph_sprints(connected):
 		all_x = []
 		all_y = []
 		for i in sprint:
-			all_x.append(i[:,1])
-			all_y.append(i[:,2])
-			print(i[-1,1])
-			ax.plot(i[0,1],i[0,2],'r',marker=(3, 0, ((i[1,2]-i[0,2]))/(i[1,1]-i[0,1])),markersize=10,zorder=2)
-			ax.plot(i[-1,1],i[-1,2],'r', marker=(3, 0, ((i[-1,2]-i[-2,2]))/(i[-1,1]-i[-2,1])),markersize=10,zorder=2)
+			all_x.append(i[:,0])
+			all_y.append(i[:,1])
+
+			ax.plot(i[0,0],i[0,1],'r',marker=(3, 0, ((i[1,1]-i[0,1]))/(i[1,0]-i[0,0])),markersize=10,zorder=2)
+			ax.plot(i[-1,0],i[-1,1],'r', marker=(3, 0, ((i[-1,1]-i[-2,1]))/(i[-1,0]-i[-2,0])),markersize=10,zorder=2)
 		ax.plot(all_x,all_y,'.b',zorder=1)
 
 
@@ -150,10 +159,10 @@ def calculate_speed(second):
 	total_distance = 0
 	for index, frame in enumerate(second):
 		if index == 0:
-			x1 = frame[1]
-			y1 = frame[2]
-		x2 = frame[1]
-		y2 = frame[2]
+			x1 = frame[0]
+			y1 = frame[1]
+		x2 = frame[0]
+		y2 = frame[1]
 		distance = hypot(x2 - x1, y2 - y1)
 		total_distance = total_distance + distance
 		# initial point to this ending point
