@@ -126,8 +126,7 @@ def graph_sprints(connected):
 		ax.plot(all_x,all_y,'.b',zorder=1)
 
 
-	plt.show()
-		# plt.arrow(row[0],row[1],row['e_x']-row[0],row['e_y']-row[1], shape='full', lw=0, length_includes_head=True, head_width=2)
+	return plt
 
 def connect_seconds(all_sprints):
 	indexes = []
@@ -196,18 +195,13 @@ def sprintmap(array):
 
 	connected = connect_seconds(all_sprints)
 
-	graph_sprints(connected)
+	graph = graph_sprints(connected)
+
+	return graph
 
 # @multimethod
 # def sprintmap(a,b):
 # 	# print(a+b) testing...
-
-
-
-
-
-
-
 
 
 # ----- Sprintmap (Finish) -----
