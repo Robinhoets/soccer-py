@@ -1,6 +1,5 @@
 from inspect import getfullargspec
 
-
 class Function(object):
   """Function is a wrap over standard python function
 

@@ -181,10 +181,15 @@ def split_array(array):
 
 @multimethod
 def sprintmap(array):
-	# print(a*a) testing...
-	# 20 frames
-	# 4 second sprint
-	# dist = math.hypot(x2 - x1, y2 - y1)
+	try:
+		ndarray = _is_ndarray(array)
+		if(ndarray):
+			pass
+		else:
+			raise ValueError()
+	except ValueError:
+		print("Sprintmap takes ndarray")
+		sys.exit()
 	spl_array = split_array(array)
 
 	all_sprints = analyze_seconds(spl_array)
