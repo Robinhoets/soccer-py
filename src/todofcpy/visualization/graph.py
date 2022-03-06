@@ -83,8 +83,8 @@ def heatmap(array):
 
 	return plot
 
-def heatmap(array,):
-	
+# def heatmap(array,):
+#
 
 # ----- Heatmap (Finish) -----
 
