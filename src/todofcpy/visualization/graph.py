@@ -9,7 +9,7 @@ from matplotlib import markers
 
 from math import hypot
 
-# from multimethod import multimethod
+from multimethod import multimethod
 
 from itertools import groupby
 from operator import itemgetter
@@ -82,6 +82,9 @@ def heatmap(array):
 	plot = _create_histogram(array)
 
 	return plot
+
+def heatmap(array,):
+	
 
 # ----- Heatmap (Finish) -----
 
