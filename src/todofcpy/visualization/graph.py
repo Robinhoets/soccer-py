@@ -9,7 +9,7 @@ from matplotlib import markers
 
 from math import hypot
 
-from multimethod import multimethod
+# from multimethod import multimethod
 
 from itertools import groupby
 from operator import itemgetter
@@ -17,6 +17,13 @@ from operator import itemgetter
 # ----- Global Helper Definitions (Start) ------
 
 def _is_ndarray(array):
+	"""
+	Returns True if is ndarray of size 2.
+
+	Parameters
+	----------
+	np.array
+	"""
 	if type(array) is np.ndarray:
 		if len(array.shape) == 2 and len(array[0]) == 2:
 			return True
@@ -30,62 +37,101 @@ def _is_ndarray(array):
 
 # ----- Heatmap (Start) -----
 
-def draw_lines(axes):
-		plt.xlim([0,100])
-		plt.ylim([0,68])
-		axes.add_line(plt.Line2D([50, 50], [100, 0], c='w'))
-		axes.add_patch(plt.Rectangle((82.3, 20.24), 15.71, 29.5, ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((0, 20.24), 15.71, 29.53, ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((94.8, 23.05), 5.2, 26.9, ec='w', fc='none'))
-		axes.add_patch(plt.Rectangle((0, 23.05), 5.2, 26.9, ec='w', fc='none'))
-		axes.add_patch(Ellipse((50, 35), 17.43, 26.91, ec='w', fc='none'))
-
-		return axes
-
 # helper definitions
-def _create_histogram(array):
+def _create_histogram(self,ax):
+	"""
+	Returns a matplotlib.pyplot with histogram2d & NonUniformImage added.
+
+	Parameters
+	----------
+	self (self.data)
+	ax = fig.subplot
+	"""
+	array = self.data
 	x, y = array[:,0], array[:,1]
 	heatmap, xedges, yedges = np.histogram2d(x, y, bins=50, range=[[0, 105], [0, 68]])
 	heatmap = heatmap.T
-	fig = plt.figure(figsize=(105/15, 68/15))
-	axes = fig.add_subplot(1, 1, 1)
-	im = NonUniformImage(axes, interpolation='bilinear',cmap='gnuplot')
+	im = NonUniformImage(ax, interpolation='bilinear', cmap=self.color)
 	xcenters = (xedges[:-1] + xedges[1:]) / 2
 	ycenters = (yedges[:-1] + yedges[1:]) / 2
 	im.set_data(xcenters, ycenters,heatmap)
-	axes.images.append(im)
-	axes = draw_lines(axes)
-	plt.axis('off')
+	ax.images.append(im)
 
 	return plt
 
-# public definitions
 
-# takes a numpy.ndarray
-def heatmap(array):
-	"""
-	Parameters
-	----------
-	array: numpy array
-		A 2d numpy array.
-	"""
-	try:
-		ndarray = _is_ndarray(array)
-		if(ndarray):
-			pass
+class Heatmap:
+	def __init__(self,**kwargs):
+		"""
+		Set's Heatmap's variables.
+		"""
+		self.__dict__ = {'color':'gnuplot'}
+		self.__dict__.update(kwargs)
+
+		# error check data
+		if 'data' in kwargs:
+			try:
+				ndarray = _is_ndarray(kwargs['data'])
+				if(ndarray):
+					pass
+				else:
+					raise ValueError()
+			except ValueError:
+				print("Heatmap takes ndarray")
+				sys.exit()
+
+		if 'color' in kwargs:
+			self.set_colors()
+
+	def create_heatmap_plot(self):
+		"""
+		Return a matplotlib.pyplot.
+
+		Parameters
+		----------
+		self
+		"""
+
+		# check for data
+		if 'data' not in self.__dict__:
+			raise ValueError("Please supply 2d array")
+
+		# upate function to do this now
+		fig=plt.figure()
+		fig.set_size_inches(7, 5)
+		ax=fig.add_subplot(1,1,1)
+		fig.set_facecolor('black')
+		draw_pitch(ax)
+
+		plt.ylim(-2, 82)
+		plt.xlim(-2, 122)
+		plt.axis('off')
+
+		# put heatmap image on plot
+		_create_histogram(self,ax)
+
+		return plt
+
+	def set_colors(self, **kwargs):
+		"""
+		Sets the color variable in self.__dict__
+
+		Parameters
+		----------
+		color = Matplotlib.cm
+		https://matplotlib.org/stable/tutorials/colors/colormaps.html
+		"""
+
+		# check if correct colors supplied
+		if self.__dict__['color'] not in ['viridis', 'plasma', 'inferno', 'magma', 'cividis']:
+			raise ValueError("please choose color value of 'viridis', 'plasma', 'inferno', 'magma' or 'cividis'")
+
+		if 'color' in kwargs:
+			self.__dict__['color'] = kwargs['color']
 		else:
-			raise ValueError()
-	except ValueError:
-		print("Heatmap takes ndarray")
-		sys.exit()
-
-	plot = _create_histogram(array)
-
-	return plot
-
-# def heatmap(array,):
-#
-
+			raise ValueError("No color supplied. Use set_colors(color=\"viridis\")")
+		# for k, v in self.__dict__.items():
+		# 	print(f"{k} -> {v}")
 # ----- Heatmap (Finish) -----
 
 # ----- Sprintmap (Start) -----
@@ -210,10 +256,5 @@ def sprintmap(array):
 	graph = graph_sprints(connected)
 
 	return graph
-
-# @multimethod
-# def sprintmap(a,b):
-# 	# print(a+b) testing...
-
 
 # ----- Sprintmap (Finish) -----
