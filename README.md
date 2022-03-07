@@ -7,16 +7,20 @@ Coming soon
 
 ## Examples
 ```python
+from todofcpy.graph import Sprintmap
 df = df[['x_pos','y_pos']]
 dat = df.to_numpy()
-plt = graph.sprintmap(dat)
+tsm = Sprintmap(data=dat)
+plt = tsm.create_sprintmap_plot()
 plt.show()
 ```
 
 ```python
+from todofcpy.graph import Heatmap
 df = df[['x_pos','y_pos']]
 dat = df.to_numpy()
-plt = graph.heatmap(dat)
+thm = Heatmap(data=dat)
+plt = thm.create_heatmap_plot(color='plasma')
 plt.show()
 ```
 ## Extra Data Work
@@ -26,6 +30,8 @@ This is a passion project started at [Todo Football Club](https://todofootballcl
 #### 0.0.0 == Currently graphs a heatmap.
 #### 0.1.0 == Sprintmaps.
 #### 0.1.1 == 2d array bug fix.
+#### 0.2.0 == Heatmap can choose color scheme from ['viridis', 'plasma', 'inferno', 'magma', 'cividis']
+####          Restructuring of codebase.
 ##### Newer versions will include animations.
 
 ## License
