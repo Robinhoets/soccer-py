@@ -108,7 +108,7 @@ class Heatmap:
 				sys.exit()
 
 		if 'color' in kwargs:
-			self.set_colors()
+			self.set_colors(color=kwargs['color'])
 
 	def create_heatmap_plot(self):
 		"""
@@ -139,7 +139,7 @@ class Heatmap:
 
 		return plt
 
-	def set_colors(self, **kwargs):
+	def set_colors(self,color):
 		"""
 		Sets the color variable in self.__dict__
 
@@ -148,13 +148,12 @@ class Heatmap:
 		color = Matplotlib.cm
 		https://matplotlib.org/stable/tutorials/colors/colormaps.html
 		"""
-
 		# check if correct colors supplied
-		if self.__dict__['color'] not in ['viridis', 'plasma', 'inferno', 'magma', 'cividis']:
+		if color not in ['viridis', 'plasma', 'inferno', 'magma', 'cividis']:
 			raise ValueError("please choose color value of 'viridis', 'plasma', 'inferno', 'magma' or 'cividis'")
 
-		if 'color' in kwargs:
-			self.__dict__['color'] = kwargs['color']
+		if color:
+			self.__dict__['color'] = color
 		else:
 			raise ValueError("No color supplied. Use set_colors(color=\"viridis\")")
 		# for k, v in self.__dict__.items():

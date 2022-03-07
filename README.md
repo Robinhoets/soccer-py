@@ -20,9 +20,20 @@ from todofcpy.graph import Heatmap
 df = df[['x_pos','y_pos']]
 dat = df.to_numpy()
 thm = Heatmap(data=dat)
-plt = thm.create_heatmap_plot(color='plasma')
+thm.set_colors(color='plasma')
+plt = thm.create_heatmap_plot()
+plt.show()
+...
+(_or_)
+...
+from todofcpy.graph import Heatmap
+df = df[['x_pos','y_pos']]
+dat = df.to_numpy()
+thm = Heatmap(data=dat, color='magma')
+plt = thm.create_heatmap_plot()
 plt.show()
 ```
+
 ## Extra Data Work
 This is a passion project started at [Todo Football Club](https://todofootballclub.com/)
 
