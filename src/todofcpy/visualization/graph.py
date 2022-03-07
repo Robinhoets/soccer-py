@@ -32,6 +32,33 @@ def _is_ndarray(array):
 	else:
 		return False
 
+def draw_pitch(ax):
+    # focus on only half of the pitch
+    #Pitch Outline & Centre Line
+    Pitch = plt.Rectangle([0,0], width = 120, height = 80,color="white", fill = False)
+    #Left, Right Penalty Area and midline
+    LeftPenalty = plt.Rectangle([0,22.3], width = 14.6, height = 35.3, color="white",fill = False)
+    RightPenalty = plt.Rectangle([105.4,22.3], width = 14.6, height = 35.3, color="white",fill = False)
+    midline = ConnectionPatch([60,0], [60,80], "data", "data",color="white")
+
+    #Left, Right 6-yard Box
+    LeftSixYard = plt.Rectangle([0,32], width = 4.9, height = 16, color="white",fill = False)
+    RightSixYard = plt.Rectangle([115.1,32], width = 4.9, height = 16, color="white",fill = False)
+
+    #Prepare Circles
+    centreCircle = plt.Circle((60,40),8.1,color="white", fill = False)
+    centreSpot = plt.Circle((60,40),0.71,color="white")
+    #Penalty spots and Arcs around penalty boxes
+    leftPenSpot = plt.Circle((9.7,40),0.71,color="white")
+    rightPenSpot = plt.Circle((110.3,40),0.71,color="white")
+    leftArc = Arc((9.7,40),height=16.2,width=16.2,angle=0,theta1=310,theta2=50,color="white")
+    rightArc = Arc((110.3,40),height=16.2,width=16.2,angle=0,theta1=130,theta2=230,color="white")
+
+    element = [Pitch, LeftPenalty, RightPenalty, midline, LeftSixYard, RightSixYard, centreCircle,
+               centreSpot, rightPenSpot, leftPenSpot, leftArc, rightArc]
+    for i in element:
+        ax.add_patch(i)
+
 # ----- Global Helper Definitions (Finish) ------
 
 
@@ -136,33 +163,6 @@ class Heatmap:
 
 # ----- Sprintmap (Start) -----
 
-def draw_pitch(ax):
-    # focus on only half of the pitch
-    #Pitch Outline & Centre Line
-    Pitch = plt.Rectangle([0,0], width = 120, height = 80,color="white", fill = False)
-    #Left, Right Penalty Area and midline
-    LeftPenalty = plt.Rectangle([0,22.3], width = 14.6, height = 35.3, color="white",fill = False)
-    RightPenalty = plt.Rectangle([105.4,22.3], width = 14.6, height = 35.3, color="white",fill = False)
-    midline = ConnectionPatch([60,0], [60,80], "data", "data",color="white")
-
-    #Left, Right 6-yard Box
-    LeftSixYard = plt.Rectangle([0,32], width = 4.9, height = 16, color="white",fill = False)
-    RightSixYard = plt.Rectangle([115.1,32], width = 4.9, height = 16, color="white",fill = False)
-
-    #Prepare Circles
-    centreCircle = plt.Circle((60,40),8.1,color="white", fill = False)
-    centreSpot = plt.Circle((60,40),0.71,color="white")
-    #Penalty spots and Arcs around penalty boxes
-    leftPenSpot = plt.Circle((9.7,40),0.71,color="white")
-    rightPenSpot = plt.Circle((110.3,40),0.71,color="white")
-    leftArc = Arc((9.7,40),height=16.2,width=16.2,angle=0,theta1=310,theta2=50,color="white")
-    rightArc = Arc((110.3,40),height=16.2,width=16.2,angle=0,theta1=130,theta2=230,color="white")
-
-    element = [Pitch, LeftPenalty, RightPenalty, midline, LeftSixYard, RightSixYard, centreCircle,
-               centreSpot, rightPenSpot, leftPenSpot, leftArc, rightArc]
-    for i in element:
-        ax.add_patch(i)
-
 def graph_sprints(connected):
 	fig=plt.figure() #set up the figures
 	fig.set_size_inches(7, 5)
@@ -182,7 +182,6 @@ def graph_sprints(connected):
 			ax.plot(i[0,0],i[0,1],'r',marker=(3, 0, ((i[1,1]-i[0,1]))/(i[1,0]-i[0,0])),markersize=10,zorder=2)
 			ax.plot(i[-1,0],i[-1,1],'r', marker=(3, 0, ((i[-1,1]-i[-2,1]))/(i[-1,0]-i[-2,0])),markersize=10,zorder=2)
 		ax.plot(all_x,all_y,'.b',zorder=1)
-
 
 	return plt
 
@@ -237,24 +236,56 @@ def split_array(array):
 	return spl_array
 
 # @multimethod
-def sprintmap(array):
-	try:
-		ndarray = _is_ndarray(array)
-		if(ndarray):
-			pass
-		else:
-			raise ValueError()
-	except ValueError:
-		print("Sprintmap takes ndarray")
-		sys.exit()
-	spl_array = split_array(array)
+# def sprintmap(array):
+# 	try:
+# 		ndarray = _is_ndarray(array)
+# 		if(ndarray):
+# 			pass
+# 		else:
+# 			raise ValueError()
+# 	except ValueError:
+# 		print("Sprintmap takes ndarray")
+# 		sys.exit()
+# 	spl_array = split_array(array)
+#
+# 	all_sprints = analyze_seconds(spl_array)
+#
+# 	connected = connect_seconds(all_sprints)
+#
+# 	graph = graph_sprints(connected)
+#
+# 	return graph
 
-	all_sprints = analyze_seconds(spl_array)
+class Sprintmap:
+	def __init__(self,**kwargs):
+		"""
+		Set's Sprintmap's variables.
+		"""
+		self.__dict__.update(kwargs)
 
-	connected = connect_seconds(all_sprints)
+		# error check data
+		if 'data' in kwargs:
+			try:
+				ndarray = _is_ndarray(kwargs['data'])
+				if(ndarray):
+					pass
+				else:
+					raise ValueError()
+			except ValueError:
+				print("Sprintmap takes ndarray")
+				sys.exit()
 
-	graph = graph_sprints(connected)
 
-	return graph
+	def create_sprintmap_plot(self):
+		array = self.data
+		spl_array = split_array(array)
+
+		all_sprints = analyze_seconds(spl_array)
+
+		connected = connect_seconds(all_sprints)
+
+		plt = graph_sprints(connected)
+
+		return plt
 
 # ----- Sprintmap (Finish) -----
