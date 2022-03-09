@@ -36,7 +36,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about/index.html">What is todofcpy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation/install.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">soccer-py</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
@@ -96,16 +104,41 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.todofcpy.visualization.graph.Heatmap.create_heatmap_plot">
 <span class="sig-name descname"><span class="pre">create_heatmap_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.Heatmap.create_heatmap_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Return a matplotlib.pyplot.</p>
-<p>self</p>
+<dd><blockquote>
+<div><p>This creates the heatmap pyplot.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>None.</em>) – None.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>matplotlib.pyplot.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>ValueError</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.todofcpy.visualization.graph.Heatmap.set_colors">
 <span class="sig-name descname"><span class="pre">set_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.Heatmap.set_colors" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the color variable in self.__dict__</p>
-<p>color = Matplotlib.cm
-<a class="reference external" href="https://matplotlib.org/stable/tutorials/colors/colormaps.html">https://matplotlib.org/stable/tutorials/colors/colormaps.html</a></p>
+<dd><blockquote>
+<div><p>This function sets the color variable in self.__dict__</p>
+</div></blockquote>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str.</em>) – color.</p></li>
+<li><p><strong>state</strong> (<em>Matplotlib.cm</em><em>, </em><em>[</em><em>'viridis'</em><em>, </em><em>'plasma'</em><em>, </em><em>'inferno'</em><em>, </em><em>'magma'</em><em>, </em><em>'cividis'</em><em>]</em><em>.
+:sets: Color attribute of plot.</em>) – Current state to be in.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>ValueError</p>
+<p><a class="reference external" href="https://matplotlib.org/stable/tutorials/colors/colormaps.html">https://matplotlib.org/stable/tutorials/colors/colormaps.html</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -117,43 +150,22 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.todofcpy.visualization.graph.Sprintmap.create_sprintmap_plot">
 <span class="sig-name descname"><span class="pre">create_sprintmap_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.Sprintmap.create_sprintmap_plot" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>None.
+:returns: matplotlib.pyplot.</em>) – None.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>ValueError</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="src.todofcpy.visualization.graph.analyze_seconds">
-<span class="sig-prename descclassname"><span class="pre">src.todofcpy.visualization.graph.</span></span><span class="sig-name descname"><span class="pre">analyze_seconds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spl_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.analyze_seconds" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.todofcpy.visualization.graph.calculate_speed">
-<span class="sig-prename descclassname"><span class="pre">src.todofcpy.visualization.graph.</span></span><span class="sig-name descname"><span class="pre">calculate_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">second</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.calculate_speed" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.todofcpy.visualization.graph.connect_seconds">
-<span class="sig-prename descclassname"><span class="pre">src.todofcpy.visualization.graph.</span></span><span class="sig-name descname"><span class="pre">connect_seconds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_sprints</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.connect_seconds" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.todofcpy.visualization.graph.draw_pitch">
-<span class="sig-prename descclassname"><span class="pre">src.todofcpy.visualization.graph.</span></span><span class="sig-name descname"><span class="pre">draw_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.draw_pitch" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.todofcpy.visualization.graph.graph_sprints">
-<span class="sig-prename descclassname"><span class="pre">src.todofcpy.visualization.graph.</span></span><span class="sig-name descname"><span class="pre">graph_sprints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connected</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.graph_sprints" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.todofcpy.visualization.graph.split_array">
-<span class="sig-prename descclassname"><span class="pre">src.todofcpy.visualization.graph.</span></span><span class="sig-name descname"><span class="pre">split_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.todofcpy.visualization.graph.split_array" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 </section>
-<section id="module-src.todofcpy.visualization.test">
-<span id="src-todofcpy-visualization-test-module"></span><h2>src.todofcpy.visualization.test module<a class="headerlink" href="#module-src.todofcpy.visualization.test" title="Permalink to this headline"></a></h2>
+<section id="src-todofcpy-visualization-test-module">
+<h2>src.todofcpy.visualization.test module<a class="headerlink" href="#src-todofcpy-visualization-test-module" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-src.todofcpy.visualization">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.todofcpy.visualization" title="Permalink to this headline"></a></h2>

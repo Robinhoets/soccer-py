@@ -1,10 +1,25 @@
-.. todofcpy documentation master file, created by
-   sphinx-quickstart on Wed Mar  9 07:24:48 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Todofcpy's Documentation
+========================
 
-Welcome to todofcpy's documentation!
-====================================
+Welcome to Todofcpy's documentation. This is a growing data analysis project for
+soccer data.
+
+.. image:: img/logo.jpg
+  :align: center
+
+.. toctree::
+    :caption: About
+    :maxdepth: 3
+
+    about/index
+
+
+.. toctree::
+  :caption: Installation
+  :maxdepth: 2
+
+  installation/install
+
 
 .. toctree::
    :maxdepth: 8
