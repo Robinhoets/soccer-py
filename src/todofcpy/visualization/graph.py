@@ -41,7 +41,7 @@ def _is_ndarray(array):
 	else:
 		return False
 
-def draw_pitch(ax):
+def _draw_pitch(ax):
     # focus on only half of the pitch
     #Pitch Outline & Centre Line
     Pitch = plt.Rectangle([0,0], width = 120, height = 80,color="white", fill = False)
@@ -100,6 +100,11 @@ class Heatmap:
 	def __init__(self,**kwargs):
 		"""
 		Set's Heatmap's variables.
+
+		Kwargs:
+           data (np.ndarray): 2d array of length 2.
+		   color (Matplotlib.cm): (optional) Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
+
 		"""
 		self.__dict__ = {'color':'gnuplot'}
 		self.__dict__.update(kwargs)
@@ -121,11 +126,12 @@ class Heatmap:
 
 	def create_heatmap_plot(self):
 		"""
-		Return a matplotlib.pyplot.
+		This creates the heatmap pyplot.
 
-		Parameters
-		----------
-		self
+	    :param name: None.
+	    :type name: None.
+	    :returns:  matplotlib.pyplot.
+	    :raises: ValueError
 		"""
 
 		# check for data
@@ -137,7 +143,7 @@ class Heatmap:
 		fig.set_size_inches(7, 5)
 		ax=fig.add_subplot(1,1,1)
 		fig.set_facecolor('black')
-		draw_pitch(ax)
+		_draw_pitch(ax)
 
 		plt.ylim(-2, 82)
 		plt.xlim(-2, 122)
@@ -150,11 +156,15 @@ class Heatmap:
 
 	def set_colors(self,color):
 		"""
-		Sets the color variable in self.__dict__
+		This function sets the color variable in self.__dict__
 
-		Parameters
-		----------
-		color = Matplotlib.cm
+	    :param name: color.
+	    :type name: str.
+	    :param state: Current state to be in.
+	    :type state: Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
+		:sets: Color attribute of plot.
+	    :raises: ValueError
+
 		https://matplotlib.org/stable/tutorials/colors/colormaps.html
 		"""
 		# check if correct colors supplied
@@ -171,12 +181,12 @@ class Heatmap:
 
 # ----- Sprintmap (Start) -----
 
-def graph_sprints(connected):
+def _graph_sprints(connected):
 	fig=plt.figure() #set up the figures
 	fig.set_size_inches(7, 5)
 	ax=fig.add_subplot(1,1,1)
 	fig.set_facecolor('black')
-	draw_pitch(ax) #overlay our different objects on the pitch
+	_draw_pitch(ax) #overlay our different objects on the pitch
 	plt.ylim(-2, 82)
 	plt.xlim(-2, 122)
 	plt.axis('off')
@@ -193,7 +203,7 @@ def graph_sprints(connected):
 
 	return plt
 
-def connect_seconds(all_sprints):
+def _connect_seconds(all_sprints):
 	indexes = []
 	for sprint in all_sprints:
 		indexes.append(sprint['index'])
@@ -209,7 +219,7 @@ def connect_seconds(all_sprints):
 
 	return connected_seconds
 
-def calculate_speed(second):
+def _calculate_speed(second):
 	x1 = 0
 	y1 = 0
 	total_distance = 0
@@ -227,47 +237,27 @@ def calculate_speed(second):
 
 	return total_distance
 
-def analyze_seconds(spl_array):
+def _analyze_seconds(spl_array):
 	all_sprints = []
 	for index, second in enumerate(spl_array):
-		speed = calculate_speed(second)
+		speed = _calculate_speed(second)
 		if speed >= 6.7:
 			sprint = {'index': index, 'second': second}
 			all_sprints.append(sprint)
 
 	return all_sprints
 
-def split_array(array):
+def _split_array(array):
 	trim_num = len(array) % 20
 	array = array[:len(array)-trim_num]
 	spl_array = np.split(array, len(array)/20)
 	return spl_array
 
-# @multimethod
-# def sprintmap(array):
-# 	try:
-# 		ndarray = _is_ndarray(array)
-# 		if(ndarray):
-# 			pass
-# 		else:
-# 			raise ValueError()
-# 	except ValueError:
-# 		print("Sprintmap takes ndarray")
-# 		sys.exit()
-# 	spl_array = split_array(array)
-#
-# 	all_sprints = analyze_seconds(spl_array)
-#
-# 	connected = connect_seconds(all_sprints)
-#
-# 	graph = graph_sprints(connected)
-#
-# 	return graph
 
 class Sprintmap:
 	def __init__(self,**kwargs):
 		"""
-		Set's Sprintmap's variables.
+		This function set's Sprintmap's variables.
 		"""
 		self.__dict__.update(kwargs)
 
@@ -285,14 +275,20 @@ class Sprintmap:
 
 
 	def create_sprintmap_plot(self):
+		"""
+	    :param name: None.
+	    :type name: None.
+		:returns: matplotlib.pyplot. 
+	    :raises: ValueError
+		"""
 		array = self.data
-		spl_array = split_array(array)
+		spl_array = _split_array(array)
 
-		all_sprints = analyze_seconds(spl_array)
+		all_sprints = _analyze_seconds(spl_array)
 
-		connected = connect_seconds(all_sprints)
+		connected = _connect_seconds(all_sprints)
 
-		plt = graph_sprints(connected)
+		plt = _graph_sprints(connected)
 
 		return plt
 
