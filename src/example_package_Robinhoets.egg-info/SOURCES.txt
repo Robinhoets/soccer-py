@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/example_package_Robinhoets.egg-info/PKG-INFO
+src/example_package_Robinhoets.egg-info/SOURCES.txt
+src/example_package_Robinhoets.egg-info/dependency_links.txt
+src/example_package_Robinhoets.egg-info/top_level.txt
+src/soccer_py/__init__.py
+src/soccer_py/visualization/__init__.py
+src/soccer_py/visualization/error.py
+src/soccer_py/visualization/graph.py
