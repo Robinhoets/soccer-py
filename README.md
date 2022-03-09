@@ -3,7 +3,7 @@
 - Visualization tool for X & Y coordinates
 
 ## Documentation
-Coming soon
+Check out the [Documentation](https://soccer-py.readthedocs.io/en/latest/)
 
 ## Examples
 ```python
