@@ -11,7 +11,7 @@ Welcome to todofcpy's documentation!
    :caption: Contents:
 
    modules
-
+   graph  
 Indices and tables
 ==================
 
