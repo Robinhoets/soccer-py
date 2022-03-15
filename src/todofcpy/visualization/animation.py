@@ -10,6 +10,33 @@ from matplotlib.image import NonUniformImage
 import numpy as np
 import pandas as pd
 
+from todofcpy.visualization.graph import Sprintmap
+
+def _is_ndarray(array):
+	"""
+	.. py:function:: lumache.get_random_ingredients(kind=None)
+
+	   Return a list of random ingredients as strings.
+
+	   :param kind: Optional "kind" of ingredients.
+	   :type kind: list[str] or None
+	   :return: The ingredients list.
+	   :rtype: list[str]
+
+	Returns True if is ndarray of size 2.
+
+	Parameters
+	----------
+	np.array
+	"""
+	if type(array) is np.ndarray:
+		if len(array.shape) == 2 and len(array[0]) == 2:
+			return True
+		else:
+			return False
+	else:
+		return False
+
 def _create_histogram(self,ax):
     """
     Returns a matplotlib.pyplot with histogram2d & NonUniformImage added.
@@ -26,7 +53,6 @@ def _create_histogram(self,ax):
 
     if 'color' in self.__dict__:
         color = self.color
-        print(color)
     else:
         color = 'gnuplot'
 
@@ -70,25 +96,51 @@ def _draw_pitch(ax):
 
 def _create_frame(t,self):
     data = self.data
-    heatmap = self.heatmap
-    fig=plt.figure()
-    fig.set_size_inches(7, 5)
-    ax=fig.add_subplot(1,1,1)
-    fig.set_facecolor('black')
-    _draw_pitch(ax)
-    plt.ylim(-2, 82)
-    plt.xlim(-2, 122)
-    plt.axis('off')
+    array = self.__dict__['array_data']
+    if 'sprintmap' in self.__dict__:
+        if self.__dict__['sprintmap'] == 'on':
+            plt = _create_sprintmap(data=array)
+            ax = plt.gca()
+            fig = plt.gcf()
+        else:
+            from matplotlib import pyplot as plt
+            fig=plt.figure()
+            fig.set_size_inches(7, 5)
+            ax=fig.add_subplot(1,1,1)
+            fig.set_facecolor('black')
+            _draw_pitch(ax)
+            plt.ylim(-2, 82)
+            plt.xlim(-2, 122)
+            plt.axis('off')
+    else:
+        from matplotlib import pyplot as plt
+        fig=plt.figure()
+        fig.set_size_inches(7, 5)
+        ax=fig.add_subplot(1,1,1)
+        fig.set_facecolor('black')
+        _draw_pitch(ax)
+        plt.ylim(-2, 82)
+        plt.xlim(-2, 122)
+        plt.axis('off')
 
+    heatmap = self.heatmap
+    # turn heatmap on?
     if(heatmap=='on'):
         _create_histogram(self,ax)
 
+
+    # set player color?
     if 'player_color' in self.__dict__:
         player_color = self.player_color
     else:
         player_color = gray
 
-    f = int(t*20)
+    if 'fps' in self.__dict__:
+        fps = self.fps
+    else:
+        fps =  20
+
+    f = int(t*fps)
     data = data.loc[f]
     ax.add_artist(Ellipse((data['x_pos'],
 					        data['y_pos']),
@@ -104,21 +156,40 @@ def _create_frame(t,self):
 def _create_dataframe(self,kwargs):
     array = kwargs['data']
     self.__dict__['data'] = pd.DataFrame({'x_pos': array[:, 0], 'y_pos': array[:, 1]})
+    self.__dict__['array_data'] = array
+
+def _create_sprintmap(data):
+    tsm = Sprintmap(data=data)
+    plt = tsm.create_sprintmap_plot()
+
+    return plt
 
 class Animation:
     def __init__(self,**kwargs):
-		"""
-		Set's Animations variables.
+        """
+        Set's Animations variables.
 
-		Kwargs:
+        Kwargs:
            data (np.ndarray): 2d array of length 2.
-		   color (Matplotlib.cm): (optional) Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
+           color (Matplotlib.cm): (optional) Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
            duration (int): Number of secods desired for clip.
            player_color (rgba,string): Color for desired player to be.
 
-		"""
+        """
+        # error check data
+        if 'data' in kwargs:
+        	try:
+        		ndarray = _is_ndarray(kwargs['data'])
+        		if(ndarray):
+        			pass
+        		else:
+        			raise ValueError()
+        	except ValueError:
+        		print("Sprintmap takes ndarray")
+        		sys.exit()
 
         self.__dict__.update(kwargs)
+
         _create_dataframe(self,kwargs)
 
     def animate(self):
@@ -130,3 +201,12 @@ class Animation:
 
         animation = VideoClip(lambda x: mplfig_to_npimage(_create_frame(x,self)[0]),duration=duration)
         animation.to_videofile("pc.mp4", fps=20)
+
+
+
+
+
+
+
+
+# hold

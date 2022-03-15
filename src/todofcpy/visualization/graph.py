@@ -278,7 +278,7 @@ class Sprintmap:
 		"""
 	    :param name: None.
 	    :type name: None.
-		:returns: matplotlib.pyplot. 
+		:returns: matplotlib.pyplot.
 	    :raises: ValueError
 		"""
 		array = self.data
