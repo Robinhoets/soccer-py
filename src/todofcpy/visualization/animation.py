@@ -164,6 +164,43 @@ def _create_sprintmap(data):
 
     return plt
 
+def _set_clip_parameters(self,kwargs):
+    # set fps
+    if 'fps' in self.__dict__:
+        pass
+    elif 'fps' in kwargs:
+        self.__dict__['fps'] = kwargs['fps']
+    else:
+        self.__dict__['fps'] = 20
+
+    # set duration
+    if 'duration' in self.__dict__:
+        pass
+    elif 'duration' in kwargs:
+        self.__dict__['duration'] = kwargs['duration']
+    else:
+        self.__dict__['duration'] = 30
+
+    # set start
+    if 'start' in self.__dict__:
+        pass
+    elif 'start' in kwargs:
+        self.__dict__['start'] = kwargs['start']
+    else:
+        self.__dict__['start'] = 0
+
+    # check length error
+    start_frames_count = self.__dict__['start'] * self.__dict__['fps']
+    duration_frames_count = self.__dict__['duration'] * self.__dict__['fps']
+    total_frames_count = start_frames_count + duration_frames_count
+    if total_frames_count > len(self.__dict__['data'].index):
+        raise ValueError("Clip length too long for data selected.")
+
+    self.__dict__['data'] = self.__dict__['data'].drop(self.__dict__['data'].index[0:start_frames_count])
+    self.__dict__['data'] = self.__dict__['data'].reset_index()
+
+
+
 class Animation:
     def __init__(self,**kwargs):
         """
@@ -192,15 +229,12 @@ class Animation:
 
         _create_dataframe(self,kwargs)
 
-    def animate(self):
-        # default duration is 30 seconds
-        if self.__dict__['duration']:
-            duration = self.duration
-        else:
-            duration = 30
+    def animate(self,**kwargs):
 
-        animation = VideoClip(lambda x: mplfig_to_npimage(_create_frame(x,self)[0]),duration=duration)
-        animation.to_videofile("pc.mp4", fps=20)
+        _set_clip_parameters(self,kwargs)
+
+        animation = VideoClip(lambda x: mplfig_to_npimage(_create_frame(x,self)[0]),duration=self.__dict__['duration'])
+        animation.to_videofile("pc.mp4", fps=self.__dict__['fps'])
 
 
 
