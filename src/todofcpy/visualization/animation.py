@@ -123,17 +123,17 @@ def _create_frame(t,self):
         plt.xlim(-2, 122)
         plt.axis('off')
 
-    heatmap = self.heatmap
-    # turn heatmap on?
-    if(heatmap=='on'):
-        _create_histogram(self,ax)
+    if 'heatmap' in self.__dict__:
+        # turn heatmap on?
+        if(self.__dict__['heatmap']=='on'):
+            _create_histogram(self,ax)
 
 
     # set player color?
     if 'player_color' in self.__dict__:
         player_color = self.player_color
     else:
-        player_color = gray
+        player_color = 'gray'
 
     if 'fps' in self.__dict__:
         fps = self.fps
@@ -230,11 +230,12 @@ class Animation:
         _create_dataframe(self,kwargs)
 
     def animate(self,**kwargs):
-
+        self.__dict__.update(kwargs)
         _set_clip_parameters(self,kwargs)
 
         animation = VideoClip(lambda x: mplfig_to_npimage(_create_frame(x,self)[0]),duration=self.__dict__['duration'])
-        animation.to_videofile("pc.mp4", fps=self.__dict__['fps'])
+        # animation.to_videofile("pc.mp4", fps=self.__dict__['fps'])
+        return animation
 
 
 
