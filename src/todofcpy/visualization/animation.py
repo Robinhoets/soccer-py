@@ -230,6 +230,27 @@ class Animation:
 		_create_dataframe(self,kwargs)
 
 	def animate(self,**kwargs):
+		"""
+		Animate saves a moviepy.editor.VideoClip in the current directory. The
+			name of the file is the start minute and finish minute.
+
+		Keyword Args:
+			start (Optional[int]): The interger value of seconds where the clip
+				is to start. Defaults to 0.
+			duration (Optional[int]): The interger value of seconds that is the
+				length of the clip. Defaults to 30 seconds.
+			color (Optional[Matplotlib.cm]): ['viridis', 'plasma', 'inferno',
+				'magma', 'cividis'].
+			player_color (Optional[Color Name, Hex Value or RGB Value]): Color
+				value of the player. Defaults to 'gray'.
+			fps (Optional[int]): The number of frames per second the data was
+				recorded in. Defaults to 20.
+			heatmap (Optional[str]): If heatmap='on', a heatmap will show in
+				background. Defaults to off.
+			sprintmap (Optional[str]): If sprintmap='on', a sprintmap will show
+				in background.
+		"""
+
 		self.__dict__.update(kwargs)
 		_set_clip_parameters(self,kwargs)
 		animation = VideoClip(lambda x: mplfig_to_npimage(_create_frame(x,self)[0]),duration=self.__dict__['duration'])
