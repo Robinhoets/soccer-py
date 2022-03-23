@@ -45,7 +45,7 @@ This is a passion project started at [Todo Football Club](https://todofootballcl
 #### 0.1.1 == 2d array bug fix.
 #### 0.2.0 == Heatmap can choose color scheme from ['viridis', 'plasma', 'inferno', 'magma', 'cividis']
 ####          Restructuring of codebase.
-##### Newer versions will include animations.
+#### 0.3.0 == Animation of single player.
 
 ## License
 todofcpy is a [MIT License](https://github.com/Robinhoets/soccer-py/blob/main/LICENSE)
