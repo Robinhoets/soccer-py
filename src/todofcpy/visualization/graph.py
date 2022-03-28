@@ -42,31 +42,27 @@ def _is_ndarray(array):
 		return False
 
 def _draw_pitch(ax):
-    # focus on only half of the pitch
-    #Pitch Outline & Centre Line
-    Pitch = plt.Rectangle([0,0], width = 120, height = 80,color="white", fill = False)
-    #Left, Right Penalty Area and midline
-    LeftPenalty = plt.Rectangle([0,22.3], width = 14.6, height = 35.3, color="white",fill = False)
-    RightPenalty = plt.Rectangle([105.4,22.3], width = 14.6, height = 35.3, color="white",fill = False)
-    midline = ConnectionPatch([60,0], [60,80], "data", "data",color="white")
 
-    #Left, Right 6-yard Box
-    LeftSixYard = plt.Rectangle([0,32], width = 4.9, height = 16, color="white",fill = False)
-    RightSixYard = plt.Rectangle([115.1,32], width = 4.9, height = 16, color="white",fill = False)
+	Field = plt.Rectangle([0,0], width = 120, height = 80,color="white", fill = False)
+	LeftPenalty = plt.Rectangle([0,22.3], width = 14.6, height = 35.3, color="white",fill = False)
+	RightPenalty = plt.Rectangle([105.4,22.3], width = 14.6, height = 35.3, color="white",fill = False)
+	midline = ConnectionPatch([60,0], [60,80], "data", "data",color="white")
 
-    #Prepare Circles
-    centreCircle = plt.Circle((60,40),8.1,color="white", fill = False)
-    centreSpot = plt.Circle((60,40),0.71,color="white")
-    #Penalty spots and Arcs around penalty boxes
-    leftPenSpot = plt.Circle((9.7,40),0.71,color="white")
-    rightPenSpot = plt.Circle((110.3,40),0.71,color="white")
-    leftArc = Arc((9.7,40),height=16.2,width=16.2,angle=0,theta1=310,theta2=50,color="white")
-    rightArc = Arc((110.3,40),height=16.2,width=16.2,angle=0,theta1=130,theta2=230,color="white")
+	LeftSixYard = plt.Rectangle([0,32], width = 4.9, height = 16, color="white",fill = False)
+	RightSixYard = plt.Rectangle([115.1,32], width = 4.9, height = 16, color="white",fill = False)
 
-    element = [Pitch, LeftPenalty, RightPenalty, midline, LeftSixYard, RightSixYard, centreCircle,
-               centreSpot, rightPenSpot, leftPenSpot, leftArc, rightArc]
-    for i in element:
-        ax.add_patch(i)
+	centreCircle = plt.Circle((60,40),8.1,color="white", fill = False)
+	centreSpot = plt.Circle((60,40),0.71,color="white")
+
+	leftPenSpot = plt.Circle((9.7,40),0.71,color="white")
+	rightPenSpot = plt.Circle((110.3,40),0.71,color="white")
+	leftArc = Arc((9.7,40),height=16.2,width=16.2,angle=0,theta1=310,theta2=50,color="white")
+	rightArc = Arc((110.3,40),height=16.2,width=16.2,angle=0,theta1=130,theta2=230,color="white")
+
+	element = [Field, LeftPenalty, RightPenalty, midline, LeftSixYard, RightSixYard, centreCircle,
+			   centreSpot, rightPenSpot, leftPenSpot, leftArc, rightArc]
+	for i in element:
+		ax.add_patch(i)
 
 # ----- Global Helper Definitions (Finish) ------
 
@@ -102,7 +98,7 @@ class Heatmap:
 		Set's Heatmap's variables.
 
 		Kwargs:
-           data (np.ndarray): 2d array of length 2.
+		   data (np.ndarray): 2d array of length 2.
 		   color (Matplotlib.cm): (optional) Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
 
 		"""
@@ -128,10 +124,10 @@ class Heatmap:
 		"""
 		This creates the heatmap pyplot.
 
-	    :param name: None.
-	    :type name: None.
-	    :returns:  matplotlib.pyplot.
-	    :raises: ValueError
+		:param name: None.
+		:type name: None.
+		:returns:  matplotlib.pyplot.
+		:raises: ValueError
 		"""
 
 		# check for data
@@ -158,12 +154,12 @@ class Heatmap:
 		"""
 		This function sets the color variable in self.__dict__
 
-	    :param name: color.
-	    :type name: str.
-	    :param state: Current state to be in.
-	    :type state: Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
+		:param name: color.
+		:type name: str.
+		:param state: Current state to be in.
+		:type state: Matplotlib.cm, ['viridis', 'plasma', 'inferno', 'magma', 'cividis'].
 		:sets: Color attribute of plot.
-	    :raises: ValueError
+		:raises: ValueError
 
 		https://matplotlib.org/stable/tutorials/colors/colormaps.html
 		"""
@@ -276,10 +272,10 @@ class Sprintmap:
 
 	def create_sprintmap_plot(self):
 		"""
-	    :param name: None.
-	    :type name: None.
+		:param name: None.
+		:type name: None.
 		:returns: matplotlib.pyplot.
-	    :raises: ValueError
+		:raises: ValueError
 		"""
 		array = self.data
 		spl_array = _split_array(array)
@@ -293,3 +289,66 @@ class Sprintmap:
 		return plt
 
 # ----- Sprintmap (Finish) -----
+
+def _draw_field(self,ax):
+
+	if 'lines' in self.__dict__:
+		line_color = self.__dict__['lines']
+	else:
+		line_color = 'white'
+
+	Field = plt.Rectangle([0,0], width = 120, height = 80,color=line_color, fill = False)
+	LeftPenalty = plt.Rectangle([0,22.3], width = 14.6, height = 35.3, color=line_color,fill = False)
+	RightPenalty = plt.Rectangle([105.4,22.3], width = 14.6, height = 35.3, color=line_color,fill = False)
+	midline = ConnectionPatch([60,0], [60,80], "data", "data",color=line_color)
+
+	LeftSixYard = plt.Rectangle([0,32], width = 4.9, height = 16, color=line_color,fill = False)
+	RightSixYard = plt.Rectangle([115.1,32], width = 4.9, height = 16, color=line_color,fill = False)
+
+	centreCircle = plt.Circle((60,40),8.1,color=line_color, fill = False)
+	centreSpot = plt.Circle((60,40),0.71,color=line_color)
+
+	leftPenSpot = plt.Circle((9.7,40),0.71,color=line_color)
+	rightPenSpot = plt.Circle((110.3,40),0.71,color=line_color)
+	leftArc = Arc((9.7,40),height=16.2,width=16.2,angle=0,theta1=310,theta2=50,color=line_color)
+	rightArc = Arc((110.3,40),height=16.2,width=16.2,angle=0,theta1=130,theta2=230,color=line_color)
+
+	element = [Field, LeftPenalty, RightPenalty, midline, LeftSixYard, RightSixYard, centreCircle,
+			   centreSpot, rightPenSpot, leftPenSpot, leftArc, rightArc]
+	for i in element:
+		ax.add_patch(i)
+
+class Field:
+	def __init__(self,**kwargs):
+
+		self.__dict__.update(kwargs)
+
+
+	def create_field(self,**kwargs):
+
+		self.__dict__.update(kwargs)
+
+		fig=plt.figure()
+		fig.set_size_inches(7, 5)
+		ax=fig.add_subplot(1,1,1)
+
+		if 'grass' in self.__dict__:
+			grass_color = self.__dict__['grass']
+		else:
+			grass_color = 'black'
+
+		fig.set_facecolor(grass_color)
+
+		_draw_field(self,ax)
+
+		plt.ylim(-2, 82)
+		plt.xlim(-2, 122)
+		plt.axis('off')
+
+		return plt
+
+
+
+
+
+# hold atom
