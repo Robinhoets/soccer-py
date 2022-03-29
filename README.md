@@ -46,6 +46,7 @@ This is a passion project started at [Todo Football Club](https://todofootballcl
 #### 0.2.0 == Heatmap can choose color scheme from ['viridis', 'plasma', 'inferno', 'magma', 'cividis']
 ####          Restructuring of codebase.
 #### 0.3.0 == Animation of single player.
+#### 0.3.1 == Create pyplot field with color choices.
 
 ## License
 todofcpy is a [MIT License](https://github.com/Robinhoets/soccer-py/blob/main/LICENSE)
