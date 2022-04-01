@@ -2,7 +2,7 @@
 ### A python application to handle soccer data.
 - Visualization tool for X & Y coordinates
 
-[![Downloads](https://static.pepy.tech/personalized-badge/todofcpy?period=total&units=international_system&left_color=lightgrey&right_color=orange&left_text=Downloads)](https://pepy.tech/project/todofcpy)
+[![Downloads](https://static.pepy.tech/personalized-badge/todofcpy?period=month&units=international_system&left_color=black&right_color=blue&left_text=Downloads)](https://pepy.tech/project/todofcpy)
 
 ## Documentation
 Check out the [Documentation](https://soccer-py.readthedocs.io/en/latest/)
